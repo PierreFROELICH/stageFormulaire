@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, Button, Alert, TextInput, Text, View} from 'react-native'
+import {StyleSheet, Button, TextInput, Text, View} from 'react-native'
 import { CreationNouveauCompte } from '../API/formAPI'
 import Navigation from '../Navigation/Navigation'
 import Avatar from './Avatar'
@@ -34,6 +34,7 @@ class CreationCompte extends React.Component {
       if (Email == '' && Mdp == '' && Username == '' )
       {
         message = "Veuillez saisir votre adresse mail, votre mot de passe et votre nom d'utilisateur";
+      //  style={styles.TextInputMail: borderColor: 'red'}
       }
       else if (Email == '' && Username == '' ){
         message = "Veuillez saisir votre adresse mail et votre nom d'utilisateur";
@@ -60,8 +61,9 @@ class CreationCompte extends React.Component {
         premierAffichage : false,
         message : message
       })
-
   }
+
+
 
     async _InsertionDonnees() {
       await this.VerificationChamps()
@@ -84,7 +86,6 @@ class CreationCompte extends React.Component {
           for(var field in response.errors){
             message += ' | '+field+' =>'
             response.errors[field].forEach(function(i){
-
                 message += ' '+i
             })
           }
@@ -142,7 +143,7 @@ class CreationCompte extends React.Component {
             placeholder="Numéro de téléphone"
             onChangeText={Telephone => this.setState({Telephone : Telephone})}
             underlineColor='transparent'
-            style={{borderColor:'red'},styles.TextInputStyleClass}
+            style={styles.TextInputStyleClass}
             />
         <Button title="Je créer mon compte" onPress={this._InsertionDonnees}/>
           <Text>{this.state.message}</Text>
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderWidth: 1,
     paddingLeft: 5,
-    borderColor: '#dee1e5'
+    borderColor: 'grey'
   },
   avatar_container: {
     alignItems: 'center'
@@ -175,7 +176,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderWidth: 1,
     paddingLeft: 5,
-    borderColor: 'red'
+    borderColor: 'grey'
   },
   TextInputPassword :{
     marginLeft: 2,
@@ -183,7 +184,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderWidth: 1,
     paddingLeft: 5,
-    borderColor: 'red'
+    borderColor: 'grey'
   },
   TextInputsUsername :{
     marginLeft: 2,
@@ -191,8 +192,8 @@ const styles = StyleSheet.create({
     height: 50,
     borderWidth: 1,
     paddingLeft: 5,
-    borderColor: 'red'
-  },
+    borderColor: 'grey',
+  }
 });
 
 export default CreationCompte;

@@ -1,5 +1,7 @@
 import React from 'react'
-import { View, TextInput, Button, StyleSheet, Text } from 'react-native'
+import {StyleSheet, Button, TextInput, Text, View} from 'react-native'
+import Navigation from '../Navigation/Navigation'
+import { ConnexionCompte } from '../API/formAPI'
 
 class Connexion extends React.Component {
 
@@ -10,17 +12,23 @@ class Connexion extends React.Component {
       Mdp: ''
     }
     this.VerificationChamps = this.VerificationChamps.bind(this);
+    this._InsertionDonnees = this._InsertionDonnees.bind(this);
   }
 
   VerificationChamps = () =>{
     const {Username} = this.state ;
     const {Mdp} = this.state ;
 
-
     var message = ''
       if ( Username == '' || Mdp == '' )
       {
-        message = "Votre mot de passe et votre nom d'utilisateur doivent être renseignés";
+        message = "Veuillez saisir votre nom d'utilisateur et votre mot de passe";
+      }
+       else if ( Username == ''){
+        message = "Veuillez saisir vote nom d'utilisateur pour vous connecter";
+      }
+       else if ( Mdp == ''){
+        message = "Veuillez saisir vote mot de passe pour vous connecter";
       }
        else {
         message = "";
@@ -29,9 +37,35 @@ class Connexion extends React.Component {
         premierAffichage : false,
         message : message
       })
-
   }
 
+  async _InsertionDonnees() {
+    await this.VerificationChamps()
+    console.log(1)
+    if( this.state.message == '') {
+      console.log(2)
+      const response = await ConnexionCompte(
+        this.state.Username,
+        this.state.Mdp
+      )
+
+        console.log('apres appel')
+      console.log(response)
+      if(response !== true){
+        message = response.message;
+        for(var field in response.errors){
+          message += ' | '+field+' =>'
+          response.errors[field].forEach(function(i){
+              message += ' '+i
+          })
+        }
+
+        this.setState({
+          message:message
+        })
+      }
+    }
+  }
 
   render() {
     return (
@@ -48,7 +82,8 @@ class Connexion extends React.Component {
         underlineColor='transparent'
         style={styles.TextInputStyleClass}
         />
-        <Button title="Connexion"/>
+        <Button title="Connexion" onPress={this._InsertionDonnees}/>
+        <Text>{this.state.message}</Text>
       </View>
     )
   }
@@ -66,9 +101,9 @@ const styles = StyleSheet.create({
     height: 50,
     borderWidth: 1,
     paddingLeft: 5,
-    borderColor: '#dee1e5'
+    borderColor: 'grey'
   }
 });
 
 
-export default Connexion
+export default Connexion;
