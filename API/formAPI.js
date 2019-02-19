@@ -35,7 +35,7 @@ try{
       return json;
     }catch(e){
       console.log("fetch error : ", error)
-
-
     }
 }
+
+// export async function ConnexionCompte(username, password)

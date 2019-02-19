@@ -18,7 +18,7 @@ class Connexion extends React.Component {
 
 
     var message = ''
-      if (Mdp == '' || Username == '' )
+      if ( Username == '' || Mdp == '' )
       {
         message = "Votre mot de passe et votre nom d'utilisateur doivent être renseignés";
       }
@@ -35,11 +35,40 @@ class Connexion extends React.Component {
 
   render() {
     return (
-      <View>
-        <Text>Test de navigation </Text>
+      <View  style={styles.MainContainer}>
+      <TextInput
+        placeholder="Nom d'utilisateur"
+        onChangeText={Username => this.setState({Username : Username})}
+        underlineColor='transparent'
+        style={styles.TextInputStyleClass}
+        />
+      <TextInput
+        placeholder="Mot de passe"
+        onChangeText={Mdp => this.setState({Mdp : Mdp})}
+        underlineColor='transparent'
+        style={styles.TextInputStyleClass}
+        />
+        <Button title="Connexion"/>
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  MainContainer : {
+    justifyContent: 'center',
+    flex: 1,
+    margin: 5
+  },
+  TextInputStyleClass :{
+    marginLeft: 2,
+    marginRight: 2,
+    height: 50,
+    borderWidth: 1,
+    paddingLeft: 5,
+    borderColor: '#dee1e5'
+  }
+});
+
 
 export default Connexion
