@@ -1,15 +1,18 @@
 //import URL from './Constantes/WBurl'
 
 
-export async function CreationNouveauCompte (email, password, username, firstname, lastname, phone ) {
+export async function CreationNouveauCompte (email, password, username, firstname, lastname, phone, avatar ) {
 
-  let stage = new FormData()
+  var stage = new FormData()
   stage.append('email', email)
   stage.append('password', password)
   stage.append('username', username)
   stage.append('firstname', firstname)
   stage.append('lastname', lastname)
-  stage.append('phone', phone);
+  stage.append('phone', phone)
+  stage.append('avatar', /*'image/png;base64'base64(get(avatar.uri))*/{
+    uri: avatar.uri, name: 'avatar', type:'image/png;base64'
+  })
 console.log(stage)
 
 try{
@@ -41,6 +44,7 @@ try{
 export async function ConnexionCompte (username, password) {
 
   let stage = new FormData()
+  console.log(username,password)
   stage.append('username', username)
   stage.append('password',password)
   console.log(stage)
@@ -58,7 +62,7 @@ export async function ConnexionCompte (username, password) {
       })
 
       console.log(serviceResponse.status)
-      if(serviceResponse.status == 201){
+      if(serviceResponse.status == 200){
         return true;
       }
       json = await serviceResponse.json();

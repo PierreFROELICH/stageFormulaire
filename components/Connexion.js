@@ -9,10 +9,11 @@ class Connexion extends React.Component {
     super(props)
     this.state = {
       Username: '',
-      Mdp: ''
+      Mdp: '',
+      premierAffichage : true
     }
     this.VerificationChamps = this.VerificationChamps.bind(this);
-    this._InsertionDonnees = this._InsertionDonnees.bind(this);
+    this._ConnexionDonnees = this._ConnexionDonnees.bind(this);
   }
 
   VerificationChamps = () =>{
@@ -20,15 +21,14 @@ class Connexion extends React.Component {
     const {Mdp} = this.state ;
 
     var message = ''
-      if ( Username == '' || Mdp == '' )
-      {
+      if (Username == '' && Mdp == ''){
         message = "Veuillez saisir votre nom d'utilisateur et votre mot de passe";
       }
-       else if ( Username == ''){
-        message = "Veuillez saisir vote nom d'utilisateur pour vous connecter";
+      else if (Mdp == '' ){
+        message = "Veuillez saisir votre mot de passe";
       }
-       else if ( Mdp == ''){
-        message = "Veuillez saisir vote mot de passe pour vous connecter";
+      else if (Username == '' ){
+        message = "Veuillez saisir votre nom d'utilisateur";
       }
        else {
         message = "";
@@ -39,50 +39,53 @@ class Connexion extends React.Component {
       })
   }
 
-  async _InsertionDonnees() {
-    await this.VerificationChamps()
-    console.log(1)
-    if( this.state.message == '') {
-      console.log(2)
-      const response = await ConnexionCompte(
-        this.state.Username,
-        this.state.Mdp
-      )
+    async _ConnexionDonnees() {
+      await this.VerificationChamps()
+      console.log(1)
+      if( this.state.message == '') {
+        console.log(2)
+        const response = await ConnexionCompte(
+          this.state.Username,
+          this.state.Mdp
+        )
 
-        console.log('apres appel')
-      console.log(response)
-      if(response !== true){
-        message = response.message;
-        for(var field in response.errors){
-          message += ' | '+field+' =>'
-          response.errors[field].forEach(function(i){
-              message += ' '+i
+          console.log('apres appel')
+        console.log(response)
+        if(response !== true){
+          message = response.message;
+          for(var field in response.errors){
+            message += ' | '+field+' =>'
+            response.errors[field].forEach(function(i){
+                message += ' '+i
+            })
+          }
+
+          this.setState({
+            message:message
           })
         }
-
-        this.setState({
-          message:message
-        })
+        else { this.props.navigation.navigate('Accueil') }
       }
     }
-  }
 
   render() {
+    const {navigate} = this.props.navigation;
     return (
       <View  style={styles.MainContainer}>
-      <TextInput
-        placeholder="Nom d'utilisateur"
-        onChangeText={Username => this.setState({Username : Username})}
-        underlineColor='transparent'
-        style={styles.TextInputStyleClass}
-        />
-      <TextInput
-        placeholder="Mot de passe"
-        onChangeText={Mdp => this.setState({Mdp : Mdp})}
-        underlineColor='transparent'
-        style={styles.TextInputStyleClass}
-        />
-        <Button title="Connexion" onPress={this._InsertionDonnees}/>
+        <TextInput
+          placeholder="Nom d'utilisateur"
+          onChangeText={Username => this.setState({Username : Username})}
+          underlineColor='transparent'
+          style={styles.TextInputStyleClass}
+          />
+        <TextInput
+          placeholder="Mot de passe"
+          onChangeText={Mdp => this.setState({Mdp : Mdp})}
+          underlineColor='transparent'
+          style={styles.TextInputStyleClass}
+          secureTextEntry={true}
+          />
+          <Button title="Connexion" onPress={this._ConnexionDonnees}/>
         <Text>{this.state.message}</Text>
       </View>
     )

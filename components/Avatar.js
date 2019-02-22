@@ -1,6 +1,9 @@
 import React from 'react'
 import { StyleSheet, Image, TouchableOpacity } from 'react-native'
 import ImagePicker from 'react-native-image-picker'
+import RNFS from 'react-native-fs'
+import ImgToBase64 from 'react-native-image-base64'
+
 
 class Avatar extends React.Component {
 
@@ -22,7 +25,7 @@ class Avatar extends React.Component {
       }
       else {
         console.log('Photo : ', response.uri)
-        let requireSource = { uri: response.uri }
+        let requireSource = RNFS.readFile( response.uri,'utf8' )
         this.setState({
           avatar: requireSource
         })
@@ -56,7 +59,8 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
     borderColor: '#9B9B9B',
-    borderWidth: 2
+    borderWidth: 2,
+    resizeMode: 'cover'
   }
 })
 

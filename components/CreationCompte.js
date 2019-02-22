@@ -15,6 +15,7 @@ class CreationCompte extends React.Component {
       Nom: '',
       Prenom: '',
       Telephone: '',
+      Avatar: '',
       message : '',
       premierAffichage : true
     }
@@ -29,12 +30,12 @@ class CreationCompte extends React.Component {
     const {Nom} = this.state ;
     const {Prenom} = this.state ;
     const {Telephone} = this.state ;
+    const {Avatar} = this.state ;
 
     var message = ''
       if (Email == '' && Mdp == '' && Username == '' )
       {
         message = "Veuillez saisir votre adresse mail, votre mot de passe et votre nom d'utilisateur";
-      //  style={styles.TextInputMail: borderColor: 'red'}
       }
       else if (Email == '' && Username == '' ){
         message = "Veuillez saisir votre adresse mail et votre nom d'utilisateur";
@@ -64,7 +65,6 @@ class CreationCompte extends React.Component {
   }
 
 
-
     async _InsertionDonnees() {
       await this.VerificationChamps()
       console.log(1)
@@ -76,7 +76,8 @@ class CreationCompte extends React.Component {
           this.state.Username,
           this.state.Nom,
           this.state.Prenom,
-          this.state.Telephone
+          this.state.Telephone,
+          this.state.Avatar
         )
 
           console.log('apres appel')
@@ -98,10 +99,6 @@ class CreationCompte extends React.Component {
       }
     }
 
-      async _GoConnexion() {
-        this.props.navigation.navigate('Connexion')
-      }
-
  render() {
    const {navigate} = this.props.navigation;
     return (
@@ -120,6 +117,7 @@ class CreationCompte extends React.Component {
             onChangeText={Mdp => this.setState({Mdp : Mdp})}
             underlineColor='transparent'
             style={styles.TextInputPassword}
+            secureTextEntry={true}
             />
           <TextInput
             placeholder="Nom d'utilisateur"
@@ -147,7 +145,7 @@ class CreationCompte extends React.Component {
             />
         <Button title="Je créer mon compte" onPress={this._InsertionDonnees}/>
           <Text>{this.state.message}</Text>
-        <Button title="Déja un compte ? Veuillez cliquer ici pour vous connecter" onPress={() => navigate('Connexion')} />
+        <Button title="Déja un compte ? Cliquez ici pour vous connecter" onPress={() => navigate('Connexion')} />
       </View>
     )
   }

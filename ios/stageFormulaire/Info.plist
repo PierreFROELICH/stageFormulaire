@@ -59,6 +59,8 @@
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>(PRODUCT_NAME) voudrait accéder à votre galerie photo</string>
 		<key>NSCameraUsageDescription</key>
-		<string>(PRODUCT_NAME) voudrait accéder à votre appareil photo</string>	
+		<string>(PRODUCT_NAME) voudrait accéder à votre appareil photo</string>
+		<key>RCTCameraRoll</key>
+		<string>(PRODUCT_NAME) voudrait accéder à votre appareil photo</string>
 </dict>
 </plist>
