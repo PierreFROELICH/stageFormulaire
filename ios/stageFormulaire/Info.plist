@@ -62,5 +62,7 @@
 		<string>(PRODUCT_NAME) voudrait accéder à votre appareil photo</string>
 		<key>RCTCameraRoll</key>
 		<string>(PRODUCT_NAME) voudrait accéder à votre appareil photo</string>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>(PRODUCT_NAME) voudrait accéder à votre géolocalisation</string>
 </dict>
 </plist>

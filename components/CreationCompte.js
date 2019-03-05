@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, Button, TextInput, Text, View} from 'react-native'
+import {StyleSheet, Button, TextInput, Text, View, Platform} from 'react-native'
 import { CreationNouveauCompte } from '../API/formAPI'
 import Navigation from '../Navigation/Navigation'
 import Avatar from './Avatar'
