@@ -3,16 +3,19 @@
 
 export async function CreationNouveauCompte (email, password, username, firstname, lastname, phone, avatar ) {
 
-  var stage = new FormData()
-  stage.append('email', email)
-  stage.append('password', password)
-  stage.append('username', username)
-  stage.append('firstname', firstname)
-  stage.append('lastname', lastname)
-  stage.append('phone', phone)
-  stage.append('avatar', /*'image/png;base64'base64(get(avatar.uri))*/{
-    uri: avatar.uri, name: 'avatar', type:'image/png;base64'
-  })
+var photoAvatar = {
+  uri: avatar.uri, name: 'avatar', type: 'image/png;base64'
+}
+
+  const stage = new FormData()
+  stage.append('email', email);
+  stage.append('password', password);
+  stage.append('username', username);
+  stage.append('firstname', firstname);
+  stage.append('lastname', lastname);
+  stage.append('phone', phone);
+  stage.append('photoAvatar', photoAvatar);
+  //stage.append('avatar',{ uri: avatar.uri, name: 'avatar', type:'image/png;base64'})
 console.log(stage)
 
 try{

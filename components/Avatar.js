@@ -1,9 +1,7 @@
 import React from 'react'
 import { StyleSheet, Image, TouchableOpacity } from 'react-native'
 import ImagePicker from 'react-native-image-picker'
-/*import RNFS from 'react-native-fs'
-import ImgToBase64 from 'react-native-image-base64'*/
-
+import { CreationNouveauCompte } from '../API/formAPI'
 
 class Avatar extends React.Component {
 
@@ -25,16 +23,10 @@ class Avatar extends React.Component {
       }
       else {
         console.log('Photo : ', response.uri)
-        //let requireSource = RNFS.readFile( response.uri,'utf8' )
+        let requireSource = { uri: response.uri }
         this.setState({
           avatar: requireSource
         })
-
-//        var photoBase = avatar
-        var b64 = btoa(avatar);
-        var decode = atob(b64);
-        console.log(b64);
-        console.log(decode);
       }
     })
   }

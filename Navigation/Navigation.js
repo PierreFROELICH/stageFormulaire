@@ -19,7 +19,7 @@ const CreationCompteStackNavigator = createStackNavigator ({
   Accueil: {
     screen:  Accueil,
     navigationOptions: {
-      title: 'Bienvenue à l\'accueil'
+      title: 'Où suis-je ?'
     }
   }
 })

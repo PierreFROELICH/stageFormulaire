@@ -1,6 +1,6 @@
 import React from 'react'
 import {StyleSheet, Button, TextInput, Text, View, Platform} from 'react-native'
-import Navigation from '../Navigation/Navigation'
+//import Navigation from '../Navigation/Navigation'
 import { ConnexionCompte } from '../API/formAPI'
 
 class Connexion extends React.Component {

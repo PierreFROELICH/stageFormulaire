@@ -1,8 +1,9 @@
 import React from 'react'
-import {StyleSheet, Button, TextInput, Text, View, Platform} from 'react-native'
+import {StyleSheet, Button, TextInput, Text, View, Platform, TouchableOpacity, Image} from 'react-native'
 import { CreationNouveauCompte } from '../API/formAPI'
-import Navigation from '../Navigation/Navigation'
-import Avatar from './Avatar'
+//import Navigation from '../Navigation/Navigation'
+//import Avatar from './Avatar'
+import ImagePicker from 'react-native-image-picker'
 
 class CreationCompte extends React.Component {
 
@@ -15,12 +16,31 @@ class CreationCompte extends React.Component {
       Nom: '',
       Prenom: '',
       Telephone: '',
-      Avatar: '',
+      avatar: require('../Images/ic_tag_faces.png'),
       message : '',
       premierAffichage : true
     }
     this.VerificationChamps = this.VerificationChamps.bind(this);
     this._InsertionDonnees = this._InsertionDonnees.bind(this);
+    this._avatarClicked = this._avatarClicked.bind(this)
+  }
+
+  _avatarClicked() {
+    ImagePicker.showImagePicker({}, (response) => {
+      if (response.didCancel) {
+        console.log('L\'utilisateur a annulé')
+      }
+      else if (response.error) {
+        console.log('Erreur : ', response.error)
+      }
+      else {
+        console.log('Photo : ', response.uri)
+        let requireSource = { uri: response.uri }
+        this.setState({
+          avatar: requireSource
+        })
+      }
+    })
   }
 
   VerificationChamps = () =>{
@@ -30,7 +50,7 @@ class CreationCompte extends React.Component {
     const {Nom} = this.state ;
     const {Prenom} = this.state ;
     const {Telephone} = this.state ;
-    const {Avatar} = this.state ;
+    const {avatar} = this.state ;
 
     var message = ''
       if (Email == '' && Mdp == '' && Username == '' )
@@ -77,7 +97,7 @@ class CreationCompte extends React.Component {
           this.state.Nom,
           this.state.Prenom,
           this.state.Telephone,
-          this.state.Avatar
+          this.state.avatar
         )
 
           console.log('apres appel')
@@ -104,8 +124,14 @@ class CreationCompte extends React.Component {
     return (
       <View  style={styles.MainContainer}>
         <View style={styles.avatar_container}>
-          <Avatar/>
-          </View>
+        <TouchableOpacity
+          style = {styles.touchableOpacity}
+          onPress = {this._avatarClicked}>
+        <Image
+          style = {styles.avatar}
+          source = {this.state.avatar} />
+        </TouchableOpacity>
+      </View>
           <TextInput
             placeholder="Adresse Mail"
             onChangeText={Email => this.setState({Email : Email})}
@@ -191,7 +217,22 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingLeft: 5,
     borderColor: 'grey',
-  }
+  },
+  touchableOpacity: {
+    margin: 5,
+    width: 100,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    borderColor: '#9B9B9B',
+    borderWidth: 2,
+    resizeMode: 'cover'
+}
 });
 
 export default CreationCompte;
